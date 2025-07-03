@@ -58,14 +58,14 @@ class MeetingResource extends Resource
                 // Campo user_id: visible solo para administradores
                 Select::make('user_id')
                     ->label('Usuario')
-                    ->options(fn () => User::role('Usuario')->pluck('name', 'id'))
-                    ->default(fn () => Auth::user() ? Auth::id() : null)
-                    ->hidden(fn () => $isUsuario)
-                    ->disabled(fn () => $isUsuario),
+                    ->options(fn() => User::role('Usuario')->pluck('name', 'id'))
+                    ->default(fn() => Auth::user() ? Auth::id() : null)
+                    ->hidden(fn() => $isUsuario)
+                    ->disabled(fn() => $isUsuario),
                 // Campo user_id oculto: visible solo para usuarios
                 Hidden::make('user_id')
-                    ->default(fn () => $isUsuario ? Auth::id() : null)
-                    ->visible(fn () => $isUsuario),
+                    ->default(fn() => $isUsuario ? Auth::id() : null)
+                    ->visible(fn() => $isUsuario),
                 DateTimePicker::make('meeting_date')
                     ->label('Fecha de la reunión')
                     ->required()
@@ -165,19 +165,19 @@ class MeetingResource extends Resource
                 ->wrap(),
             IconColumn::make('meeting_status')
                 ->label('Estado')
-                ->color(fn ($state) => match ($state) {
+                ->color(fn($state) => match ($state) {
                     self::STATUS_REQUESTED => 'warning',
                     self::STATUS_ACCEPTED => 'success',
                     self::STATUS_FINISHED => 'success',
                     self::STATUS_CANCELLED => 'danger',
                 })
-                ->icon(fn ($state) => match ($state) {
+                ->icon(fn($state) => match ($state) {
                     self::STATUS_REQUESTED => 'heroicon-o-clock',
                     self::STATUS_ACCEPTED => 'heroicon-o-clock',
                     self::STATUS_FINISHED => 'heroicon-o-check-circle',
                     self::STATUS_CANCELLED => 'heroicon-o-x-circle',
                 })
-                ->tooltip(fn ($state) => self::STATUS_OPTIONS[$state] ?? $state),
+                ->tooltip(fn($state) => self::STATUS_OPTIONS[$state] ?? $state),
         ];
     }
 
